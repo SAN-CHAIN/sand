@@ -1,0 +1,14 @@
+/opt/ripple/log/debug.log
+{
+        rotate 30
+        daily
+        dateext
+        dateyesterday
+        missingok
+        notifempty
+        delaycompress
+        compress
+        postrotate
+                /opt/ripple/bin/rippled --conf /opt/ripple/data/rippled.cfg logrotate >/dev/null 2>&1 || true
+        endscript
+}

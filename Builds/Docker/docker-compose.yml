@@ -1,0 +1,66 @@
+n1:
+  ports:
+  - 15005:5005/tcp
+  - 15006:5006/tcp
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.container.hostname_override: container_name
+  tty: true
+  command:
+  - --conf
+  - /opt/ripple/conf/rippled.mysql.cfg
+  image: 10.0.0.15:5000/tfcc/tfccd
+v1:
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.container.hostname_override: container_name
+  command:
+  - --conf
+  - /opt/ripple/conf/rippled.v1.cfg
+  tty: true
+  image: 10.0.0.15:5000/tfcc/tfccd
+  volumes:
+  - /opt/tfcc/v1/data:/opt/ripple/data
+  - /opt/tfcc/v1/log:/opt/ripple/log
+  stdin_open: true
+v3:
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.container.hostname_override: container_name
+  command:
+  - --conf
+  - /opt/ripple/conf/rippled.v3.cfg
+  tty: true
+  image: 10.0.0.15:5000/tfcc/tfccd
+  volumes:
+  - /opt/tfcc/v3/data:/opt/ripple/data
+  - /opt/tfcc/v3/log:/opt/ripple/log
+  stdin_open: true
+v2:
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.container.hostname_override: container_name
+  command:
+  - --conf
+  - /opt/ripple/conf/rippled.v2.cfg
+  tty: true
+  image: 10.0.0.15:5000/tfcc/tfccd
+  volumes:
+  - /opt/tfcc/v2/data:/opt/ripple/data
+  - /opt/tfcc/v2/log:/opt/ripple/log
+  stdin_open: true
+tfcc-db:
+  ports:
+  - 13306:3306/tcp
+  environment:
+    MYSQL_DATABASE: transaction
+    MYSQL_PASSWORD: tfcc
+    MYSQL_ROOT_PASSWORD: password
+    MYSQL_USER: tfcc
+  labels:
+    io.rancher.container.pull_image: always
+  tty: true
+  image: mysql:5.5.50
+  volumes:
+  - /opt/tfcc/db:/var/lib/mysql
+  stdin_open: true
