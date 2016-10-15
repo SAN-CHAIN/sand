@@ -114,6 +114,7 @@ OPENSSL_ERROR = ('Your openSSL was built on %s; '
 UNITY_BUILD_DIRECTORY = 'src/ripple/unity/'
 
 def check_openssl():
+    return
     if Beast.system.platform in CHECK_PLATFORMS:
         for line in subprocess.check_output(CHECK_COMMAND.split()).splitlines():
             if line.startswith(CHECK_LINE):
